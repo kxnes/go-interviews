@@ -16,7 +16,7 @@ const (
 	testdata    = "../../test/testdata/example.txt"
 	testdataLen = 20
 	testURL     = "https://golang.org"
-	eps         = 500 // latency in milliseconds (depends from connection)
+	eps         = 1000 // latency in milliseconds (depends from connection)
 )
 
 func TestNewCounterPositive(t *testing.T) {

@@ -12,4 +12,6 @@ lint:
 	golint ${package}
 
 test:
-	go test -race -cover ${package}
+	make -C apicache
+	go test -race -cover ./counter/...
+	go test -race -cover ./parallels/...
