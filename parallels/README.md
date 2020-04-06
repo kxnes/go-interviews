@@ -21,11 +21,19 @@ Command-line arguments:
  - `-op` (type `string`): operation that will be perform on input data
  - `-out` (type `string`): output JSON filename for done jobs (default `out.json`)
 
-Test coverage:
+Taste it!
+
+Example
+-------
 
 ```bash
-go test -cover ./pkg/...
-# ok      github.com/kxnes/go-interviews/parallels/pkg/jobs       9.007s  coverage: 90.9% of statements
+$ go run cmd/parallels/parallels.go -in test/testdata/valid.json -op +
+# result (in out.json by default)
+$ head -n 5 out.json
+# [
+#   {
+#     "Job": 5,
+#     "Output": 8
+#   },
+# ...
 ```
-
-Taste it!

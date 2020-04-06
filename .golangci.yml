@@ -1,0 +1,11 @@
+run:
+  tests: false
+
+linters:
+  enable-all: true
+
+issues:
+  exclude-rules:
+    - path: parallels/cmd/parallels/
+      linters:
+        - unparam

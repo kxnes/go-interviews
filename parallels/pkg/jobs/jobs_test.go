@@ -84,12 +84,12 @@ func TestUnmarshal(t *testing.T) {
 		want want
 	}{
 		{"valid JSON", filepath.Join(testdata, "valid.json"), want{jobs: []Job{
-			{ID: 1, a: 16, b: 4,},
-			{ID: 2, a: 128, b: 16,},
-			{ID: 3, a: 8, b: 9,},
-			{ID: 4, a: 7, b: 3,},
-			{ID: 5, a: 8, b: 0,},
-			{ID: 6, a: 7, b: 3,},
+			{ID: 1, a: 16, b: 4},
+			{ID: 2, a: 128, b: 16},
+			{ID: 3, a: 8, b: 9},
+			{ID: 4, a: 7, b: 3},
+			{ID: 5, a: 8, b: 0},
+			{ID: 6, a: 7, b: 3},
 		}}},
 		{"invalid JSON", filepath.Join(testdata, "invalid.json"), want{err: &json.SyntaxError{}}},
 		{"file not exist", filepath.Join(testdata, "notexist.json"), want{err: &os.PathError{}}},
