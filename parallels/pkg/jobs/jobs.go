@@ -1,3 +1,4 @@
+// Package jobs contains the instruments to work with parallel execution JSON jobs.
 package jobs
 
 import (
@@ -32,6 +33,7 @@ func (j *Job) process(fn func(int, int) (int, error)) {
 	// end emulate long time execution
 
 	var err error
+
 	j.Output, err = fn(j.a, j.b)
 	if err != nil {
 		j.err = err
@@ -58,13 +60,17 @@ func Unmarshal(path string) ([]Job, error) {
 	}
 
 	jsonData := make([]map[string]interface{}, 0)
+
 	err = json.Unmarshal(data, &jsonData)
 	if err != nil {
 		return nil, err
 	}
 
-	var id int
-	var jobs []Job
+	var (
+		id   int
+		jobs = make([]Job, 0)
+	)
+
 	for _, d := range jsonData {
 		arg1, ok1 := d["arg1"]
 		arg2, ok2 := d["arg2"]
@@ -81,8 +87,8 @@ func Unmarshal(path string) ([]Job, error) {
 		}
 
 		id++
-		j := Job{a: int(arg1Val), b: int(arg2Val), ID: id}
-		jobs = append(jobs, j)
+
+		jobs = append(jobs, Job{a: int(arg1Val), b: int(arg2Val), ID: id})
 	}
 
 	return jobs, nil
@@ -117,6 +123,7 @@ func Process(fn func(int, int) (int, error), jobs []Job) ([]Job, error) {
 	}
 
 	processed := make(chan Job)
+
 	for _, j := range jobs {
 		go func(j Job) {
 			j.process(fn)
@@ -124,12 +131,14 @@ func Process(fn func(int, int) (int, error), jobs []Job) ([]Job, error) {
 		}(j)
 	}
 
-	var valid []Job
+	valid := make([]Job, 0)
+
 	for range jobs {
 		j := <-processed
 		if j.err != nil {
 			continue
 		}
+
 		valid = append(valid, j)
 	}
 
