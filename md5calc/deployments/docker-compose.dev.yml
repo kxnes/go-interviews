@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  md5calc-app:
+    build:
+      context: .
+      dockerfile: build/Dockerfile
+    env_file:
+      - configs/dev/md5calc-app.env
+    networks:
+      - md5calc-net
+    ports:
+      - 8080:8080
+    depends_on:
+      - md5calc-db
+
+  md5calc-db:
+    image: postgres:latest
+    env_file:
+      - configs/dev/md5calc-db.env
+    networks:
+      - md5calc-net
+    volumes:
+      - md5calc-db:/var/lib/postgresql/data
+
+networks:
+  md5calc-net:
+
+volumes:
+  md5calc-db:
